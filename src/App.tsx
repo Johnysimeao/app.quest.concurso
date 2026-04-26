@@ -81,11 +81,23 @@ export default function App() {
   };
 
   return (
-    <div className="h-screen bg-[#0f172a] font-sans text-slate-800 flex flex-col items-center justify-center p-0 selection:bg-blue-100 selection:text-blue-900 overflow-hidden">
+    <div className="h-screen bg-slate-50 font-sans text-slate-800 flex flex-col items-center justify-center p-0 selection:bg-blue-100 selection:text-blue-900 overflow-hidden">
       
-      {/* Container Principal - Estilo Profissional e Reto */}
-      <div className="bg-white w-full max-w-md h-full flex flex-col relative overflow-hidden shadow-2xl">
+      {/* Container Principal - Responsivo para PC e Celular */}
+      <div className="bg-white w-full max-w-lg h-full md:h-[95vh] md:max-h-[850px] flex flex-col relative overflow-hidden shadow-2xl md:shadow-none">
         
+        {/* Barra de Progresso Sutil */}
+        {(gameState === 'QUIZ' || gameState === 'FEEDBACK') && (
+          <div className="absolute top-0 left-0 w-full h-1 bg-slate-100 z-50">
+            <motion.div 
+              initial={{ width: 0 }}
+              animate={{ width: `${((currentIdx + 1) / 15) * 100}%` }}
+              className="h-full bg-blue-600 shadow-[0_0_10px_rgba(37,99,235,0.5)]"
+              transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+            />
+          </div>
+        )}
+
         <AnimatePresence mode="wait">
           
           {/* TELA INICIAL - PREENCHIDA E COLORIDA */}
@@ -112,13 +124,12 @@ export default function App() {
               </p>
               
               <div className="w-full space-y-2">
-                <div className="h-px bg-slate-100 w-full mb-6"></div>
                 <h3 className="text-[9px] font-black text-slate-300 uppercase tracking-[0.4em] mb-4">SELECIONE A DIFICULDADE</h3>
                 {(['Fácil', 'Médio', 'Difícil'] as Difficulty[]).map((level) => (
                   <button
                     key={level}
                     onClick={() => startQuiz(level)}
-                    className="w-full group bg-white hover:bg-blue-600 p-5 border border-slate-200 flex items-center justify-between transition-all active:scale-[0.98] shadow-sm"
+                    className="w-full group bg-white hover:bg-blue-600 p-5 flex items-center justify-between transition-all active:scale-[0.98] shadow-sm"
                   >
                     <span className="text-base font-black text-slate-700 group-hover:text-white uppercase tracking-tighter">{level}</span>
                     <div className="bg-slate-50 p-1 group-hover:bg-white/20 transition-colors">
@@ -143,21 +154,33 @@ export default function App() {
               exit={{ opacity: 0 }}
               className="flex-1 flex flex-col items-center pt-8 px-6"
             >
-              {/* CRONOMETRO - IGUAL A IMAGEM */}
-              <div className="flex flex-col items-center mb-6">
-                <div className="flex items-center gap-2 text-slate-900 mb-1">
-                  <Timer size={24} className="text-slate-400" />
-                  <span className="text-6xl font-black tabular-nums tracking-tighter leading-none">
-                    {formatTime(timeLeft)}
-                  </span>
-                </div>
-                <div className="text-[8px] font-black text-slate-400 uppercase tracking-[0.3em]">
-                  {difficulty} • QUESTÃO {currentIdx + 1} / 15
+              {/* CRONOMETRO - HEADER BLOCK COMPACTO E LARGO */}
+              <div className="w-full mb-4 mt-2">
+                <div className="bg-slate-900 w-full py-4 px-6 flex items-center justify-between shadow-lg border-b-4 border-blue-600 relative overflow-hidden">
+                  <div className="absolute top-0 right-0 w-32 h-full bg-blue-600/10 skew-x-[-20deg] translate-x-16"></div>
+                  
+                  <div className="flex flex-col relative z-10">
+                    <span className="text-[10px] font-black text-blue-400 uppercase tracking-[0.3em] leading-none mb-1">
+                      TREINAMENTO {difficulty}
+                    </span>
+                    <span className="text-sm font-black text-white uppercase tracking-tight">
+                      QUESTÃO {currentIdx + 1} <span className="text-slate-500">/ 15</span>
+                    </span>
+                  </div>
+
+                  <div className="flex items-center gap-4 relative z-10">
+                    <div className="flex items-center gap-3">
+                      <Timer size={20} className={`${timeLeft < 10 ? 'text-red-500 animate-pulse' : 'text-blue-500'}`} />
+                      <span className={`text-4xl font-mono font-black tabular-nums leading-none ${timeLeft < 10 ? 'text-red-500' : 'text-white'}`}>
+                        {formatTime(timeLeft)}
+                      </span>
+                    </div>
+                  </div>
                 </div>
               </div>
 
               {/* PERGUNTA EM BOX RETO */}
-              <div className="w-full bg-[#f8faff] border border-blue-100 p-6 flex flex-col items-center justify-center text-center mb-6 min-h-[140px] shadow-sm">
+              <div className="w-full bg-[#f8faff] p-4 flex flex-col items-center justify-center text-center mb-4 min-h-[90px] shadow-sm border border-slate-100">
                  <h2 className="text-lg font-bold text-slate-800 leading-tight">
                    {quizSet[currentIdx].question}
                  </h2>
@@ -169,12 +192,12 @@ export default function App() {
                   <button
                     key={i}
                     onClick={() => handleAnswer(opt)}
-                    className="w-full text-left p-4 border border-slate-200 hover:border-blue-600 hover:bg-blue-50 transition-all flex items-center gap-4 group active:scale-[0.99] shadow-sm bg-white"
+                    className="w-full text-left p-4 bg-gradient-to-r from-blue-100/70 via-blue-50/40 to-white border border-blue-200/60 shadow-[0_2px_12px_-2px_rgba(0,0,0,0.06)] hover:shadow-md hover:border-blue-400/40 transition-all flex items-center gap-4 group active:scale-[0.99]"
                   >
-                    <span className="w-10 h-10 bg-slate-50 text-slate-400 flex items-center justify-center font-black text-xs group-hover:bg-blue-600 group-hover:text-white transition-colors shrink-0 border border-slate-100">
+                    <span className="w-10 h-10 bg-white border border-blue-100 text-slate-400 flex items-center justify-center font-black text-xs group-hover:bg-blue-600 group-hover:text-white group-hover:border-blue-600 transition-all shrink-0 shadow-sm">
                       {String.fromCharCode(65 + i)}
                     </span>
-                    <span className="text-sm font-bold text-slate-700 flex-1 group-hover:text-blue-900 transition-colors">{opt}</span>
+                    <span className="text-sm font-bold text-slate-700 flex-1 group-hover:text-blue-900 transition-colors uppercase tracking-tight">{opt}</span>
                   </button>
                 ))}
               </div>
@@ -187,44 +210,55 @@ export default function App() {
               key="feedback-main"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              className="flex-1 flex flex-col items-center px-6 py-10 justify-center h-full"
+              className="flex-1 flex flex-col items-center justify-center px-8 h-full relative"
             >
-               <div className="text-slate-200 font-black text-xl mb-4 opacity-30 tabular-nums">
+               <div className="absolute top-8 text-slate-200 font-black text-xl opacity-30 tabular-nums">
                   {formatTime(timeLeft)}
                </div>
 
-               <div className="mb-4 text-center">
-                 <h3 className={`text-4xl font-black uppercase tracking-tighter leading-none ${isCorrect ? 'text-green-600' : 'text-red-600'}`}>
-                   {isCorrect ? 'CORRETO' : 'ERRADO'}
-                 </h3>
-               </div>
+               <div className="w-full flex flex-col items-center">
+                 <div className="mb-6 text-center">
+                   <h3 className={`text-5xl font-black uppercase tracking-tighter leading-none ${isCorrect ? 'text-green-600' : 'text-red-600'}`}>
+                     {isCorrect ? 'CORRETO' : 'ERRADO'}
+                   </h3>
+                 </div>
 
-               {/* CARD DE COMENTÁRIO - COMPACTO E CENTRALIZADO */}
-               <div className="w-full bg-white border border-slate-200 p-6 flex flex-col mb-8 overflow-hidden shadow-inner relative max-h-[60%]">
-                 <div className="absolute top-0 left-0 w-full h-1 bg-blue-500 opacity-20"></div>
-                 
-                 <div className="flex items-center gap-3 mb-4">
-                    <MessageSquareQuote size={18} className="text-blue-500" />
-                    <span className="text-[9px] font-black text-slate-400 uppercase tracking-widest underline decoration-blue-200 underline-offset-4">COMENTÁRIO</span>
-                 </div>
-                 
-                 <div className="text-base font-bold text-slate-600 leading-relaxed mb-6 overflow-y-auto scrollbar-hide">
-                   {quizSet[currentIdx].explanation}
-                 </div>
-                 
-                 <div className="mt-auto pt-6 border-t border-slate-100 flex flex-col items-start gap-1">
-                    <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest underline decoration-blue-200 underline-offset-4">GABARITO</span>
-                    <span className="text-base font-black text-blue-600 uppercase tracking-tight">{quizSet[currentIdx].answer}</span>
-                 </div>
-               </div>
+                 {/* CARD DE COMENTÁRIO - ESTILO LIMPO E BRANCO */}
+                 <div className="w-full bg-white p-6 flex flex-col mb-6 overflow-hidden relative shadow-sm border border-slate-100">
+                   
+                   {/* GABARITO - CLARO E DIRETO */}
+                   <div className="mb-5 flex flex-col items-start gap-1.5">
+                      <div className="flex items-center gap-2">
+                        <div className="bg-slate-100 p-1">
+                          <CheckCircle2 size={12} className="text-blue-600" />
+                        </div>
+                        <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">GABARITO OFICIAL</span>
+                      </div>
+                      <span className="text-2xl md:text-3xl font-black text-slate-800 uppercase tracking-tight leading-tight">{quizSet[currentIdx].answer}</span>
+                   </div>
 
-               <button
-                onClick={nextQuestion}
-                className="w-full bg-slate-900 text-white font-black py-5 rounded-none transition-all flex items-center justify-center gap-3 uppercase tracking-[0.2em] text-xs hover:bg-blue-700 active:scale-95 shadow-xl"
-              >
-                PRÓXIMA QUESTÃO
-                <ArrowRight size={18} strokeWidth={3} />
-              </button>
+                   <div className="pt-5 border-t border-slate-50">
+                     <div className="flex items-center gap-2.5 mb-3">
+                        <div className="bg-slate-50 p-1.5">
+                          <MessageSquareQuote size={13} className="text-slate-400" />
+                        </div>
+                        <span className="text-[10px] font-black text-slate-400 uppercase tracking-[0.2em]">COMENTÁRIO TÉCNICO</span>
+                     </div>
+                     
+                     <div className="text-base font-bold text-slate-600 leading-relaxed">
+                       {quizSet[currentIdx].explanation}
+                     </div>
+                   </div>
+                 </div>
+
+                 <button
+                  onClick={nextQuestion}
+                  className="w-full bg-slate-900 text-white font-black py-5 rounded-none transition-all flex items-center justify-center gap-3 uppercase tracking-[0.2em] text-xs hover:bg-blue-700 active:scale-95 shadow-xl"
+                >
+                  PRÓXIMA QUESTÃO
+                  <ArrowRight size={18} strokeWidth={3} />
+                </button>
+               </div>
             </motion.div>
           )}
 
@@ -244,11 +278,11 @@ export default function App() {
                <div className="text-[9px] font-black text-slate-400 uppercase tracking-[0.3em] mb-10 bg-slate-50 px-4 py-1 inline-block">NÍVEL {difficulty}</div>
                
                <div className="grid grid-cols-2 gap-4 w-full mb-10">
-                 <div className="bg-slate-50 p-6 border border-slate-200 flex flex-col items-center">
+                 <div className="bg-slate-50 p-6 flex flex-col items-center">
                    <div className="text-4xl font-black text-green-600 mb-1">{score}</div>
                    <div className="text-[8px] font-black text-slate-400 uppercase tracking-widest">ACERTOS</div>
                  </div>
-                 <div className="bg-slate-50 p-6 border border-slate-200 flex flex-col items-center">
+                 <div className="bg-slate-50 p-6 flex flex-col items-center">
                    <div className="text-4xl font-black text-red-600 mb-1">{15 - score}</div>
                    <div className="text-[8px] font-black text-slate-400 uppercase tracking-widest">ERROS</div>
                  </div>
