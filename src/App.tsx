@@ -15,19 +15,27 @@ import { FeedbackScreen } from './components/FeedbackScreen';
 import { ResultScreen } from './components/ResultScreen';
 
 // Áudio Systems
-const gameSounds: Record<string, HTMLAudioElement> = {
-  SELECT: new Audio('https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3'),
-  CORRECT: new Audio('https://assets.mixkit.co/active_storage/sfx/1435/1435-preview.mp3'),
-  WRONG: new Audio('https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3'),
-  ERROR: new Audio('https://assets.mixkit.co/active_storage/sfx/2573/2573-preview.mp3')
+const SOUND_URLS = {
+  SELECT: 'https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3',
+  CORRECT: 'https://assets.mixkit.co/active_storage/sfx/1435/1435-preview.mp3',
+  WRONG: 'https://assets.mixkit.co/active_storage/sfx/2568/2568-preview.mp3',
+  ERROR: 'https://assets.mixkit.co/active_storage/sfx/2573/2573-preview.mp3'
 };
 
-Object.values(gameSounds).forEach(audio => {
-  audio.volume = 0.4;
-  audio.preload = 'auto';
-});
-
 export default function App() {
+  // Áudio Instances
+  const gameSounds = useMemo(() => {
+    if (typeof window === 'undefined') return {} as Record<string, HTMLAudioElement>;
+    const sounds: Record<string, HTMLAudioElement> = {};
+    Object.entries(SOUND_URLS).forEach(([key, url]) => {
+      const audio = new Audio(url);
+      audio.volume = 0.4;
+      audio.preload = 'auto';
+      sounds[key] = audio;
+    });
+    return sounds;
+  }, []);
+
   // Estados de Configuração e Jogo
   const [gameState, setGameState] = useState<GameState>('LOGIN');
   const [user, setUser] = useState<{ username: string } | null>(null);
@@ -184,9 +192,12 @@ export default function App() {
     setGameState('WELCOME');
   };
 
-  const handleAnswer = (option: string) => {
+  const handleAnswer = useCallback((option: string) => {
     if (selectedOption || gameState !== 'QUIZ') return;
-    const correct = option === quizSet[currentIdx].answer;
+    const currentQuestion = quizSet[currentIdx];
+    if (!currentQuestion) return;
+
+    const correct = option === currentQuestion.answer;
     setSelectedOption(option);
     setIsCorrect(correct);
     if (correct) {
@@ -196,17 +207,17 @@ export default function App() {
       playSound('WRONG');
     }
     setTimeout(() => setGameState('FEEDBACK'), 800);
-  };
+  }, [selectedOption, gameState, quizSet, currentIdx, playSound]);
 
-  const handleSkip = () => {
+  const handleSkip = useCallback(() => {
     if (selectedOption) return;
     setSelectedOption('__SKIPPED__');
     setIsCorrect(false);
     playSound('SELECT');
     setGameState('FEEDBACK');
-  };
+  }, [selectedOption, playSound]);
 
-  const nextQuestion = () => {
+  const nextQuestion = useCallback(() => {
     setJustification("");
     setGrammarFeedback(null);
     if (currentIdx < quizSet.length - 1) {
@@ -218,9 +229,9 @@ export default function App() {
     } else {
       setGameState('RESULT');
     }
-  };
+  }, [currentIdx, quizSet.length]);
 
-  const resetSimulation = () => {
+  const resetSimulation = useCallback(() => {
     setJustification("");
     setGrammarFeedback(null);
     setQuizSet([]);
@@ -228,7 +239,7 @@ export default function App() {
     setScore(0);
     setGameState('SELECT_LEVEL');
     playSound('SELECT');
-  };
+  }, [playSound]);
 
   useEffect(() => {
     let timer: number;
