@@ -1,15 +1,4 @@
-export type Difficulty = 'Fácil' | 'Médio' | 'Difícil';
-export type Banca = 'FGV' | 'CESPE' | 'FCC' | 'Vunesp' | 'Geral';
-
-export interface Question {
-  id: number;
-  difficulty: Difficulty;
-  banca?: Banca;
-  question: string;
-  options: string[];
-  answer: string;
-  explanation: string;
-}
+import { Question, Difficulty, Banca } from './types';
 
 export const questions: Question[] = [
   // FÁCIL
@@ -332,7 +321,7 @@ export const questions: Question[] = [
     id: 135,
     difficulty: 'Difícil',
     banca: 'FGV',
-    question: 'Bluetooth, um padrão de comunicação sem fio e de baixo consumo, permite a transmissão de dados entre dispositivos compatíveis em todas as partes do mundo por utilizar uma frequência de rádio aberta padronizada.',
+    question: 'O Bluetooth é um padrão sem fio que transmite dados entre dispositivos compatíveis usando radiofrequência aberta padronizada.',
     options: ['Certo', 'Errado'],
     answer: 'Certo',
     explanation: 'O Bluetooth opera na faixa de 2.4GHz, que é aberta mundialmente.'
@@ -860,7 +849,7 @@ export const questions: Question[] = [
     id: 1119,
     difficulty: 'Difícil',
     banca: 'CESPE',
-    question: 'Sobre a memória cache, é correto afirmar que sua principal função é reduzir o tempo médio de acesso a dados localizados na memória principal.',
+    question: 'A principal função da memória cache é reduzir o tempo médio de acesso a dados na memória principal?',
     options: ['Certo', 'Errado'],
     answer: 'Certo',
     explanation: 'A cache armazena cópias de dados da RAM para acesso ultrarrápido pela CPU.'
@@ -869,7 +858,7 @@ export const questions: Question[] = [
     id: 1120,
     difficulty: 'Fácil',
     banca: 'CESPE',
-    question: 'No Windows 7 ou superior, qual funcionalidade permite organizar arquivos de diferentes pastas em uma única visualização centralizada?',
+    question: 'Qual recurso do Windows 7+ organiza arquivos de várias pastas em uma única visualização centralizada?',
     options: ['Bibliotecas', 'Meus Documentos', 'Painel de Controle', 'Desktop'],
     answer: 'Bibliotecas',
     explanation: 'As Bibliotecas (Libraries) agregam conteúdos de locais distintos sem movê-los.'
@@ -1058,7 +1047,7 @@ export const questions: Question[] = [
     id: 1141,
     difficulty: 'Médio',
     banca: 'Vunesp',
-    question: 'No Microsoft Excel 365, a função utilizada para retornar a posição de um item em um intervalo que corresponde a um valor específico é:',
+    question: 'No Excel 365, qual função retorna a posição de um item em um intervalo que corresponde a um valor específico?',
     options: ['PROCV', 'CORRESP', 'INDICE', 'ESCOLHER'],
     answer: 'CORRESP',
     explanation: 'A função CORRESP procura um item específico em um intervalo de células e retorna a posição relativa desse item.'
@@ -1085,7 +1074,7 @@ export const questions: Question[] = [
     id: 1144,
     difficulty: 'Difícil',
     banca: 'Vunesp',
-    question: 'No contexto de Correio Eletrônico, o protocolo que permite que o cliente de e-mail acesse as pastas no servidor e mantenha as mensagens sincronizadas entre múltiplos dispositivos é o:',
+    question: 'Qual protocolo de e-mail permite acessar pastas no servidor e manter mensagens sincronizadas entre vários aparelhos?',
     options: ['SMTP', 'POP3', 'IMAP', 'HTTP'],
     answer: 'IMAP',
     explanation: 'O IMAP permite a sincronização bidirecional, mantendo o estado das mensagens no servidor.'
@@ -1157,7 +1146,7 @@ export const questions: Question[] = [
     id: 1152,
     difficulty: 'Difícil',
     banca: 'CESPE',
-    question: 'No Windows 10, o BitLocker é uma ferramenta de criptografia que protege apenas arquivos individuais selecionados pelo usuário, não sendo capaz de criptografar drivers inteiros.',
+    question: 'No Windows 10, o BitLocker protege apenas arquivos individuais, não sendo capaz de criptografar unidades (drivers) inteiras?',
     options: ['Certo', 'Errado'],
     answer: 'Errado',
     explanation: 'O BitLocker é projetado para criptografar volumes inteiros (unidades de disco), protegendo todos os dados do drive.'
