@@ -17,7 +17,7 @@ export const ResultScreen: React.FC<ResultProps> = ({ isDarkMode, score, total, 
       key="result-screen"
       initial={{ opacity: 0, scale: 0.9 }}
       animate={{ opacity: 1, scale: 1 }}
-      className="flex-1 flex flex-col items-center justify-center px-10 text-center"
+      className={`flex-1 flex flex-col items-center justify-center px-10 text-center relative ${isDarkMode ? 'bg-slate-950' : 'bg-white'}`}
     >
       <div className={`absolute inset-0 ${isDarkMode ? 'bg-gradient-to-b from-blue-900/40 to-slate-950' : 'bg-gradient-to-b from-blue-100/50 to-white'} -z-10`}></div>
       

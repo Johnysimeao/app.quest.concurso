@@ -40,7 +40,7 @@ export const FeedbackScreen: React.FC<FeedbackProps> = ({
       initial={{ opacity: 0, y: 30 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -30 }}
-      className="flex-1 flex flex-col h-full overflow-hidden"
+      className={`flex-1 flex flex-col h-full overflow-hidden ${isDarkMode ? 'bg-slate-950' : 'bg-white'}`}
     >
       <div className={`p-8 ${isCorrect ? 'bg-green-600' : (selectedOption === '__SKIPPED__' ? 'bg-slate-700' : 'bg-red-600')} text-white flex flex-col items-center justify-center text-center shadow-xl relative`}>
         <div className="absolute top-0 right-0 w-32 h-full bg-white/10 skew-x-[-20deg] translate-x-16"></div>

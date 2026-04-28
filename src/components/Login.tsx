@@ -36,7 +36,7 @@ export const Login: React.FC<LoginProps> = ({ isDarkMode, setIsDarkMode, onLogin
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 1.05 }}
-      className="flex-1 flex flex-col items-center justify-center px-10 text-center relative"
+      className={`flex-1 flex flex-col items-center justify-center px-10 text-center relative ${isDarkMode ? 'bg-slate-950' : 'bg-white'}`}
     >
       <div className={`absolute inset-0 ${isDarkMode ? 'bg-gradient-to-b from-blue-950/30 to-slate-950' : 'bg-gradient-to-b from-blue-50/50 to-white'} -z-10`}></div>
       

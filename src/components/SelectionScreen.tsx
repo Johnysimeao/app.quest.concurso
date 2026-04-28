@@ -74,7 +74,7 @@ export const SelectionScreen: React.FC<SelectionProps> = ({
       initial="initial"
       animate="animate"
       exit="exit"
-      className="flex-1 flex flex-col items-center justify-center px-10 text-center relative"
+      className={`flex-1 flex flex-col items-center justify-center px-10 text-center relative ${isDarkMode ? 'bg-slate-950' : 'bg-white'}`}
     >
       <div className={`absolute inset-0 ${isDarkMode ? 'bg-gradient-to-b from-blue-950/30 to-slate-950' : 'bg-gradient-to-b from-blue-50/50 to-white'} -z-10`}></div>
       
