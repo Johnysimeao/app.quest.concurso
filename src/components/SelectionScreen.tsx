@@ -74,23 +74,23 @@ export const SelectionScreen: React.FC<SelectionProps> = ({
       initial="initial"
       animate="animate"
       exit="exit"
-      className={`flex-1 flex flex-col items-center justify-center p-6 md:p-10 text-center relative ${isDarkMode ? 'bg-slate-950' : 'bg-white'}`}
+      className={`flex-1 flex flex-col items-center ${type === 'COUNT' ? 'justify-center' : 'pt-20 md:justify-center'} px-6 md:px-10 text-center relative overflow-y-auto scrollbar-hide pb-10 ${isDarkMode ? 'bg-slate-950' : 'bg-white'}`}
     >
       <div className={`absolute inset-0 ${isDarkMode ? 'bg-gradient-to-b from-blue-950/30 to-slate-950' : 'bg-gradient-to-b from-blue-50/50 to-white'} -z-10`}></div>
       
       {onBack && (
         <button 
           onClick={onBack}
-          className={`absolute top-4 left-6 md:top-12 md:left-8 flex items-center gap-2 text-[8px] font-black ${isDarkMode ? 'text-slate-500' : 'text-slate-400'} uppercase tracking-widest hover:text-blue-600 transition-colors`}
+          className={`absolute top-6 left-6 md:top-12 md:left-8 flex items-center gap-2 text-[8px] font-black ${isDarkMode ? 'text-slate-500' : 'text-slate-400'} uppercase tracking-widest hover:text-blue-600 transition-colors z-20`}
         >
           <ArrowRight size={12} className="rotate-180" /> VOLTAR
         </button>
       )}
 
       {type === 'LEVEL' && (
-        <div className="absolute top-4 right-6 md:top-12 md:right-8 flex items-center gap-4">
+        <div className="absolute top-6 right-6 md:top-12 md:right-8 flex items-center gap-4 z-20">
           <div className="flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full bg-green-500" />
+            <div className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
             <span className={`text-[8px] font-black ${isDarkMode ? 'text-slate-500' : 'text-slate-400'} uppercase tracking-widest`}>
               ONLINE
             </span>
@@ -98,16 +98,16 @@ export const SelectionScreen: React.FC<SelectionProps> = ({
         </div>
       )}
 
-      <div className="mb-4">{icon}</div>
+      <div className="mb-2 shrink-0 md:mb-4">{icon}</div>
       
-      <h1 className={`text-3xl font-black ${isDarkMode ? 'text-white' : 'text-slate-900'} mb-1 uppercase tracking-tight leading-none`}>
+      <h1 className={`text-xl md:text-3xl font-black ${isDarkMode ? 'text-white' : 'text-slate-900'} mb-1 uppercase tracking-tight leading-none shrink-0`}>
         {title.split(' ')[0]} <span className="text-blue-600">{title.split(' ').slice(1).join(' ')}</span>
       </h1>
-      <p className={`text-[8px] ${isDarkMode ? 'text-slate-500' : 'text-slate-400'} mb-8 font-bold uppercase tracking-[0.4em]`}>
+      <p className={`text-[7px] md:text-[8px] ${isDarkMode ? 'text-slate-500' : 'text-slate-400'} mb-4 md:mb-8 font-bold uppercase tracking-[0.4em] shrink-0`}>
         {subtitle}
       </p>
       
-      <div className={`w-full ${type === 'COUNT' ? 'grid grid-cols-2 gap-3' : 'space-y-2'}`}>
+      <div className={`w-full max-w-sm mx-auto ${type === 'COUNT' ? 'grid grid-cols-2 gap-3 pb-8' : 'space-y-2 pb-10'}`}>
         {options.map((opt: any) => {
           const isBeingSelected = selecting === opt;
           
@@ -116,10 +116,10 @@ export const SelectionScreen: React.FC<SelectionProps> = ({
               <button
                 key={opt}
                 onClick={() => onSelect(opt)}
-                className={`w-full group ${isDarkMode ? 'bg-slate-900 hover:bg-blue-600' : 'bg-white hover:bg-blue-600'} py-8 flex flex-col items-center justify-center transition-all active:scale-[0.98] shadow-sm border ${isDarkMode ? 'border-slate-800' : 'border-slate-50'}`}
+                className={`w-full group ${isDarkMode ? 'bg-slate-900 hover:bg-blue-600' : 'bg-white hover:bg-blue-600'} py-6 md:py-8 flex flex-col items-center justify-center transition-all active:scale-[0.98] shadow-sm border ${isDarkMode ? 'border-slate-800' : 'border-slate-50'}`}
               >
-                <span className={`text-3xl font-black ${isDarkMode ? 'text-white' : 'text-slate-900'} group-hover:text-white`}>{opt}</span>
-                <span className={`text-[9px] font-black ${isDarkMode ? 'text-slate-400' : 'text-slate-400'} group-hover:text-white/60 uppercase tracking-[0.2em]`}>QUESTÕES</span>
+                <span className={`text-2xl md:text-3xl font-black ${isDarkMode ? 'text-white' : 'text-slate-900'} group-hover:text-white`}>{opt}</span>
+                <span className={`text-[8px] md:text-[9px] font-black ${isDarkMode ? 'text-slate-400' : 'text-slate-400'} group-hover:text-white/60 uppercase tracking-[0.2em]`}>QUESTÕES</span>
               </button>
             );
           }
@@ -136,7 +136,7 @@ export const SelectionScreen: React.FC<SelectionProps> = ({
               }}
               whileHover={!selecting ? { scale: 1.01, backgroundColor: '#2563eb', borderColor: '#2563eb' } : {}}
               whileTap={!selecting ? { scale: 0.98 } : {}}
-              className="w-full group p-4 flex items-center justify-between transition-none shadow-sm border relative overflow-hidden"
+              className="w-full group p-3 md:p-4 flex items-center justify-between transition-none shadow-sm border relative overflow-hidden"
             >
               {isBeingSelected && (
                 <motion.div 
