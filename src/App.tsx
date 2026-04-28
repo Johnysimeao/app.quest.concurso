@@ -256,12 +256,12 @@ export default function App() {
   }, [gameState, timeLeft]);
 
   return (
-    <div className={`h-screen ${isDarkMode ? 'bg-slate-950' : 'bg-white'} font-sans ${isDarkMode ? 'text-slate-100' : 'text-slate-800'} flex items-center justify-center overflow-hidden transition-colors duration-300`}>
-      <div className={`${isDarkMode ? 'bg-slate-950' : 'bg-white'} w-full max-w-lg h-full md:h-[95vh] md:max-h-[850px] flex flex-col relative overflow-hidden transition-colors duration-300`}>
+    <div className={`min-h-[100dvh] pt-safe ${isDarkMode ? 'bg-slate-950' : 'bg-white'} font-sans ${isDarkMode ? 'text-slate-100' : 'text-slate-800'} flex items-center justify-center overflow-hidden transition-colors duration-300`}>
+      <div className={`${isDarkMode ? 'bg-slate-950' : 'bg-white'} w-full max-w-lg h-full md:h-[95vh] md:max-h-[850px] flex flex-col relative overflow-hidden transition-colors duration-300 pt-10 md:pt-0`}>
         
         {/* Progress Bar */}
         {(gameState === 'QUIZ' || gameState === 'FEEDBACK') && (
-          <div className={`absolute top-0 left-0 w-full h-1 ${isDarkMode ? 'bg-slate-800' : 'bg-slate-100'} z-50`}>
+          <div className={`absolute top-0 md:top-0 left-0 w-full h-1 ${isDarkMode ? 'bg-slate-800' : 'bg-slate-100'} z-50`}>
             <motion.div 
               initial={{ width: 0 }}
               animate={{ width: `${progress}%` }}

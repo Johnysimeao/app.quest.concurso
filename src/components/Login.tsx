@@ -64,7 +64,7 @@ export const Login: React.FC<LoginProps> = ({ isDarkMode, setIsDarkMode, onLogin
               setUsername(e.target.value.toUpperCase());
               setError(null);
             }}
-            className={`w-full py-4 pl-12 pr-4 ${isDarkMode ? 'bg-slate-900 border-slate-800 text-white placeholder:text-slate-600' : 'bg-slate-50 border-slate-100 text-slate-900 placeholder:text-slate-400'} border font-bold text-xs tracking-widest focus:outline-none focus:border-blue-600 transition-colors uppercase`}
+            className={`w-full py-4 pl-12 pr-4 ${isDarkMode ? 'bg-slate-900 border-slate-800 text-white placeholder:text-slate-600' : 'bg-slate-50 border-slate-100 text-slate-900 placeholder:text-slate-400'} border font-bold text-base tracking-widest focus:outline-none focus:border-blue-600 transition-colors uppercase`}
           />
         </div>
         <div className="relative">
@@ -77,7 +77,7 @@ export const Login: React.FC<LoginProps> = ({ isDarkMode, setIsDarkMode, onLogin
               setPassword(e.target.value);
               setError(null);
             }}
-            className={`w-full py-4 pl-12 pr-12 ${isDarkMode ? 'bg-slate-900 border-slate-800 text-white placeholder:text-slate-600' : 'bg-slate-50 border-slate-100 text-slate-900 placeholder:text-slate-400'} border font-bold text-xs tracking-widest focus:outline-none focus:border-blue-600 transition-colors uppercase`}
+            className={`w-full py-4 pl-12 pr-12 ${isDarkMode ? 'bg-slate-900 border-slate-800 text-white placeholder:text-slate-600' : 'bg-slate-50 border-slate-100 text-slate-900 placeholder:text-slate-400'} border font-bold text-base tracking-widest focus:outline-none focus:border-blue-600 transition-colors uppercase`}
           />
           <button
             type="button"

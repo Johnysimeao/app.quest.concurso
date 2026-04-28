@@ -88,7 +88,7 @@ export const FeedbackScreen: React.FC<FeedbackProps> = ({
                   if (grammarFeedback) setGrammarFeedback(null);
                 }}
                 placeholder="Digite aqui seu comentário ou elabore sua resposta..."
-                className={`w-full h-24 p-3 text-[11px] font-medium transition-all focus:ring-1 focus:ring-blue-500 outline-none resize-none ${isDarkMode ? 'bg-slate-950 border-slate-800 text-slate-300' : 'bg-slate-50 border-slate-100 text-slate-600'} border`}
+                className={`w-full h-24 p-3 text-base font-medium transition-all focus:ring-1 focus:ring-blue-500 outline-none resize-none ${isDarkMode ? 'bg-slate-950 border-slate-800 text-slate-300' : 'bg-slate-50 border-slate-100 text-slate-600'} border`}
               />
 
               {grammarFeedback && (
