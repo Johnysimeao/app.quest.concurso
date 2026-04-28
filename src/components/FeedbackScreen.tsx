@@ -16,6 +16,7 @@ interface FeedbackProps {
   checkingGrammar: boolean;
   onGrammarCheck: () => void;
   onNext: () => void;
+  isLastQuestion?: boolean;
 }
 
 export const FeedbackScreen: React.FC<FeedbackProps> = ({
@@ -30,7 +31,8 @@ export const FeedbackScreen: React.FC<FeedbackProps> = ({
   setGrammarFeedback,
   checkingGrammar,
   onGrammarCheck,
-  onNext
+  onNext,
+  isLastQuestion = false
 }) => {
   return (
     <motion.div 
@@ -43,7 +45,7 @@ export const FeedbackScreen: React.FC<FeedbackProps> = ({
       <div className={`p-8 ${isCorrect ? 'bg-green-600' : (selectedOption === '__SKIPPED__' ? 'bg-slate-700' : 'bg-red-600')} text-white flex flex-col items-center justify-center text-center shadow-xl relative`}>
         <div className="absolute top-0 right-0 w-32 h-full bg-white/10 skew-x-[-20deg] translate-x-16"></div>
         {isCorrect ? <CheckCircle2 size={48} className="mb-4" /> : <XCircle size={48} className="mb-4" />}
-        <h2 className="text-3xl font-black uppercase tracking-tighter italic">{feedbackText}</h2>
+        <h2 className="text-3xl font-black uppercase tracking-tighter">{feedbackText}</h2>
       </div>
 
       <div className="flex-1 overflow-y-auto px-8 py-6 scrollbar-hide">
@@ -66,7 +68,7 @@ export const FeedbackScreen: React.FC<FeedbackProps> = ({
                   <div className={`${isDarkMode ? 'bg-slate-950' : 'bg-slate-50'} p-1.5`}>
                     <User size={12} className="text-slate-400" />
                   </div>
-                  <span className={`text-[9px] font-black ${isDarkMode ? 'text-white' : 'text-slate-400'} uppercase tracking-[0.2em]`}>SUA JUSTIFICATIVA</span>
+                  <span className={`text-[9px] font-black ${isDarkMode ? 'text-white' : 'text-slate-400'} uppercase tracking-[0.2em]`}>COMENTE SUA OPINIÃO / ELABORE</span>
                 </div>
                 
                 <button 
@@ -85,7 +87,7 @@ export const FeedbackScreen: React.FC<FeedbackProps> = ({
                   setJustification(e.target.value);
                   if (grammarFeedback) setGrammarFeedback(null);
                 }}
-                placeholder="Escreva aqui seu raciocínio sobre esta questão..."
+                placeholder="Digite aqui seu comentário ou elabore sua resposta..."
                 className={`w-full h-24 p-3 text-[11px] font-medium transition-all focus:ring-1 focus:ring-blue-500 outline-none resize-none ${isDarkMode ? 'bg-slate-950 border-slate-800 text-slate-300' : 'bg-slate-50 border-slate-100 text-slate-600'} border`}
               />
 
@@ -105,13 +107,17 @@ export const FeedbackScreen: React.FC<FeedbackProps> = ({
            </div>
         </div>
 
-        <button 
+        <motion.button 
           onClick={onNext}
-          className="w-full bg-blue-600 hover:bg-blue-700 text-white font-black py-4 shadow-xl shadow-blue-600/20 transition-all active:scale-[0.98] uppercase tracking-[0.3em] text-xs flex items-center justify-center gap-3"
+          animate={isLastQuestion ? {
+            scale: [1, 1.02, 1],
+            transition: { duration: 2, repeat: Infinity, ease: "easeInOut" }
+          } : {}}
+          className={`w-full ${isLastQuestion ? 'bg-blue-600' : 'bg-blue-600'} hover:bg-blue-700 text-white font-black py-4 shadow-xl shadow-blue-600/20 transition-all active:scale-[0.98] uppercase tracking-[0.3em] text-xs flex items-center justify-center gap-3`}
         >
-          PRÓXIMA QUESTÃO
+          {isLastQuestion ? 'FINALIZAR SIMULADO' : 'PRÓXIMA QUESTÃO'}
           <ArrowRight size={18} strokeWidth={3} />
-        </button>
+        </motion.button>
       </div>
     </motion.div>
   );

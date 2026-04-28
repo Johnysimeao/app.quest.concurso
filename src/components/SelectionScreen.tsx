@@ -5,6 +5,7 @@ import { Difficulty, Banca } from '../types';
 
 interface SelectionProps {
   type: 'LEVEL' | 'BANCA' | 'COUNT';
+  direction?: number;
   isDarkMode: boolean;
   onSelect: (val: any) => void;
   onBack?: () => void;
@@ -16,6 +17,7 @@ interface SelectionProps {
 
 export const SelectionScreen: React.FC<SelectionProps> = ({ 
   type, 
+  direction = 1,
   isDarkMode, 
   onSelect, 
   onBack, 
@@ -38,12 +40,40 @@ export const SelectionScreen: React.FC<SelectionProps> = ({
                   type === 'BANCA' ? ['Geral', 'FGV', 'CESPE', 'FCC', 'Vunesp'] :
                   [10, 15, 20, 25];
 
+  const variants = {
+    initial: (d: number) => ({
+      opacity: 0,
+      x: d > 0 ? 50 : -50,
+      scale: 0.98
+    }),
+    animate: {
+      opacity: 1,
+      x: 0,
+      scale: 1,
+      transition: {
+        x: { type: "spring", stiffness: 300, damping: 30 },
+        opacity: { duration: 0.2 }
+      }
+    },
+    exit: (d: number) => ({
+      opacity: 0,
+      x: d > 0 ? -50 : 50,
+      scale: 0.98,
+      transition: {
+        x: { type: "spring", stiffness: 300, damping: 30 },
+        opacity: { duration: 0.2 }
+      }
+    })
+  };
+
   return (
     <motion.div 
       key={`select-${type.toLowerCase()}`}
-      initial={{ opacity: 0, x: 20 }}
-      animate={{ opacity: 1, x: 0 }}
-      exit={{ opacity: 0, x: -20 }}
+      custom={direction}
+      variants={variants}
+      initial="initial"
+      animate="animate"
+      exit="exit"
       className="flex-1 flex flex-col items-center justify-center px-10 text-center relative"
     >
       <div className={`absolute inset-0 ${isDarkMode ? 'bg-gradient-to-b from-blue-950/30 to-slate-950' : 'bg-gradient-to-b from-blue-50/50 to-white'} -z-10`}></div>

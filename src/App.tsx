@@ -38,6 +38,7 @@ export default function App() {
 
   // Estados de Configuração e Jogo
   const [gameState, setGameState] = useState<GameState>('LOGIN');
+  const [direction, setDirection] = useState(1); // 1 for forward, -1 for backward
   const [user, setUser] = useState<{ username: string } | null>(null);
   const [dbStatus, setDbStatus] = useState<'connecting' | 'connected' | 'error'>('connecting');
   
@@ -150,6 +151,7 @@ export default function App() {
   const handleLogin = (username: string) => {
     playSound('SELECT');
     setUser({ username });
+    setDirection(1);
     setGameState('SELECT_LEVEL');
   };
 
@@ -171,6 +173,7 @@ export default function App() {
     setSelecting(level);
     setTimeout(() => {
       setDifficulty(level);
+      setDirection(1);
       setGameState('SELECT_BANCA');
       setSelecting(null);
     }, 300);
@@ -181,6 +184,7 @@ export default function App() {
     setSelecting(b);
     setTimeout(() => {
       setBanca(b);
+      setDirection(1);
       setGameState('SELECT_COUNT');
       setSelecting(null);
     }, 300);
@@ -252,8 +256,8 @@ export default function App() {
   }, [gameState, timeLeft]);
 
   return (
-    <div className={`h-screen ${isDarkMode ? 'bg-slate-900' : 'bg-slate-50'} font-sans ${isDarkMode ? 'text-slate-100' : 'text-slate-800'} flex items-center justify-center overflow-hidden transition-colors duration-300`}>
-      <div className={`${isDarkMode ? 'bg-slate-950' : 'bg-white'} w-full max-w-lg h-full md:h-[95vh] md:max-h-[850px] flex flex-col relative overflow-hidden shadow-2xl transition-colors duration-300`}>
+    <div className={`h-screen ${isDarkMode ? 'bg-slate-950' : 'bg-white'} font-sans ${isDarkMode ? 'text-slate-100' : 'text-slate-800'} flex items-center justify-center overflow-hidden transition-colors duration-300`}>
+      <div className={`${isDarkMode ? 'bg-slate-950' : 'bg-white'} w-full max-w-lg h-full md:h-[95vh] md:max-h-[850px] flex flex-col relative overflow-hidden transition-colors duration-300`}>
         
         {/* Progress Bar */}
         {(gameState === 'QUIZ' || gameState === 'FEEDBACK') && (
@@ -279,6 +283,7 @@ export default function App() {
           {gameState === 'SELECT_LEVEL' && (
             <SelectionScreen 
               type="LEVEL" 
+              direction={direction}
               isDarkMode={isDarkMode} 
               onSelect={handleLevelSelect} 
               selecting={selecting} 
@@ -289,9 +294,13 @@ export default function App() {
           {gameState === 'SELECT_BANCA' && (
             <SelectionScreen 
               type="BANCA" 
+              direction={direction}
               isDarkMode={isDarkMode} 
               onSelect={handleBancaSelect} 
-              onBack={() => setGameState('SELECT_LEVEL')}
+              onBack={() => {
+                setDirection(-1);
+                setGameState('SELECT_LEVEL');
+              }}
               selecting={selecting} 
               playSound={playSound}
             />
@@ -300,9 +309,13 @@ export default function App() {
           {gameState === 'SELECT_COUNT' && (
             <SelectionScreen 
               type="COUNT" 
+              direction={direction}
               isDarkMode={isDarkMode} 
               onSelect={handleCountSelect} 
-              onBack={() => setGameState('SELECT_BANCA')}
+              onBack={() => {
+                setDirection(-1);
+                setGameState('SELECT_BANCA');
+              }}
               selecting={selecting} 
               playSound={playSound}
             />
@@ -351,6 +364,7 @@ export default function App() {
               checkingGrammar={checkingGrammar}
               onGrammarCheck={handleGrammarCheck}
               onNext={nextQuestion}
+              isLastQuestion={currentIdx === quizSet.length - 1}
             />
           )}
 

@@ -33,8 +33,8 @@ export const ResultScreen: React.FC<ResultProps> = ({ isDarkMode, score, total, 
         <div className="absolute inset-0 bg-yellow-500/30 blur-3xl animate-pulse rounded-full"></div>
       </div>
 
-      <h2 className={`text-4xl font-black ${isDarkMode ? 'text-white' : 'text-slate-900'} mb-2 uppercase tracking-tighter italic`}>
-        FIM DO <span className="text-blue-600">TREINO!</span>
+      <h2 className={`text-4xl font-black ${isDarkMode ? 'text-white' : 'text-slate-900'} mb-2 uppercase tracking-tighter`}>
+        FIM DO <span className="text-blue-600">SIMULADO!</span>
       </h2>
       
       <div className="flex flex-col items-center mb-10">

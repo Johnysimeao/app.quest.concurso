@@ -117,22 +117,22 @@ export const QuizScreen: React.FC<QuizProps> = ({
             </motion.button>
           );
         })}
-
-        {!selectedOption && (
-          <div className="pt-2">
-            <motion.button
-              whileHover={{ scale: 1.02, backgroundColor: isDarkMode ? '#1e293b' : '#f8fafc' }}
-              whileTap={{ scale: 0.98 }}
-              onClick={onSkip}
-              className={`w-full py-3 border-2 ${isDarkMode ? 'border-slate-700 text-white' : 'border-slate-200 text-slate-400'} font-black uppercase tracking-widest text-[10px] flex items-center justify-center gap-3 hover:text-slate-400 hover:border-slate-700 transition-all shadow-sm ${isDarkMode ? 'bg-slate-950/50' : 'bg-white/50'}`}
-            >
-              <div className={`w-1.5 h-1.5 ${isDarkMode ? 'bg-blue-600' : 'bg-slate-300'} rounded-full`}></div>
-              Pular Questão
-              <div className={`w-1.5 h-1.5 ${isDarkMode ? 'bg-blue-600' : 'bg-slate-300'} rounded-full`}></div>
-            </motion.button>
-          </div>
-        )}
       </div>
+
+      {!selectedOption && (
+        <div className="w-full pt-2">
+          <motion.button
+            whileHover={{ scale: 1.02, backgroundColor: isDarkMode ? '#1e293b' : '#f8fafc' }}
+            whileTap={{ scale: 0.98 }}
+            onClick={onSkip}
+            className={`w-full py-3 border-2 ${isDarkMode ? 'border-slate-700 text-white' : 'border-slate-200 text-slate-400'} font-black uppercase tracking-widest text-[10px] flex items-center justify-center gap-3 hover:text-slate-400 hover:border-slate-700 transition-all shadow-sm ${isDarkMode ? 'bg-slate-950/50' : 'bg-white/50'}`}
+          >
+            <div className={`w-1.5 h-1.5 ${isDarkMode ? 'bg-blue-600' : 'bg-slate-300'} rounded-full`}></div>
+            Pular Questão
+            <div className={`w-1.5 h-1.5 ${isDarkMode ? 'bg-blue-600' : 'bg-slate-300'} rounded-full`}></div>
+          </motion.button>
+        </div>
+      )}
     </motion.div>
   );
 };
