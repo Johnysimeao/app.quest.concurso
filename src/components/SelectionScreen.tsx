@@ -74,21 +74,21 @@ export const SelectionScreen: React.FC<SelectionProps> = ({
       initial="initial"
       animate="animate"
       exit="exit"
-      className={`flex-1 flex flex-col items-center justify-center px-10 text-center relative ${isDarkMode ? 'bg-slate-950' : 'bg-white'}`}
+      className={`flex-1 flex flex-col items-center justify-center p-6 md:p-10 text-center relative ${isDarkMode ? 'bg-slate-950' : 'bg-white'}`}
     >
       <div className={`absolute inset-0 ${isDarkMode ? 'bg-gradient-to-b from-blue-950/30 to-slate-950' : 'bg-gradient-to-b from-blue-50/50 to-white'} -z-10`}></div>
       
       {onBack && (
         <button 
           onClick={onBack}
-          className={`absolute top-12 left-8 flex items-center gap-2 text-[8px] font-black ${isDarkMode ? 'text-slate-500' : 'text-slate-400'} uppercase tracking-widest hover:text-blue-600 transition-colors`}
+          className={`absolute top-4 left-6 md:top-12 md:left-8 flex items-center gap-2 text-[8px] font-black ${isDarkMode ? 'text-slate-500' : 'text-slate-400'} uppercase tracking-widest hover:text-blue-600 transition-colors`}
         >
           <ArrowRight size={12} className="rotate-180" /> VOLTAR
         </button>
       )}
 
       {type === 'LEVEL' && (
-        <div className="absolute top-12 right-8 flex items-center gap-4">
+        <div className="absolute top-4 right-6 md:top-12 md:right-8 flex items-center gap-4">
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 rounded-full bg-green-500" />
             <span className={`text-[8px] font-black ${isDarkMode ? 'text-slate-500' : 'text-slate-400'} uppercase tracking-widest`}>

@@ -20,14 +20,14 @@
 
 @layer base {
   html, body {
-    @apply h-screen overflow-hidden transition-colors duration-300;
+    @apply min-h-[100dvh] transition-colors duration-300;
   }
   
-  html.dark {
+  html.dark, body.dark {
     @apply bg-slate-950;
   }
   
-  html:not(.dark) {
+  html:not(.dark), body:not(.dark) {
     @apply bg-white;
   }
 }

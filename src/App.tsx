@@ -246,6 +246,16 @@ export default function App() {
   }, [playSound]);
 
   useEffect(() => {
+    if (isDarkMode) {
+      document.documentElement.classList.add('dark');
+      document.body.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      document.body.classList.remove('dark');
+    }
+  }, [isDarkMode]);
+
+  useEffect(() => {
     let timer: number;
     if (gameState === 'QUIZ' && timeLeft > 0) {
       timer = window.setInterval(() => setTimeLeft(t => t - 1), 1000);
@@ -257,11 +267,14 @@ export default function App() {
 
   return (
     <div className={`fixed inset-0 ${isDarkMode ? 'bg-slate-950' : 'bg-white'} font-sans ${isDarkMode ? 'text-slate-100' : 'text-slate-800'} flex items-center justify-center overflow-hidden transition-colors duration-300`}>
-      <div className={`${isDarkMode ? 'bg-slate-950 text-white' : 'bg-white text-slate-800'} w-full max-w-lg h-full md:h-[95vh] md:max-h-[850px] flex flex-col relative overflow-hidden transition-colors duration-300 pt-[6dvh] md:pt-0`}>
+      <div className={`${isDarkMode ? 'bg-slate-950 text-white' : 'bg-white text-slate-800'} w-full max-w-lg h-full md:h-[95vh] md:max-h-[850px] flex flex-col relative overflow-hidden transition-colors duration-300`}>
         
+        {/* Safe Area Spacer for Mobile */}
+        <div className="h-[env(safe-area-inset-top,20px)] md:hidden shrink-0" />
+
         {/* Progress Bar */}
         {(gameState === 'QUIZ' || gameState === 'FEEDBACK') && (
-          <div className={`absolute top-[6dvh] md:top-0 left-0 w-full h-1 ${isDarkMode ? 'bg-slate-800' : 'bg-slate-100'} z-50`}>
+          <div className={`shrink-0 w-full h-1 ${isDarkMode ? 'bg-slate-800' : 'bg-slate-100'} z-50`}>
             <motion.div 
               initial={{ width: 0 }}
               animate={{ width: `${progress}%` }}

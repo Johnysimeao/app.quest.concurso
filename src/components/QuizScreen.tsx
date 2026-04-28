@@ -34,7 +34,7 @@ export const QuizScreen: React.FC<QuizProps> = ({
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="flex-1 flex flex-col items-center pt-4 px-6 overflow-hidden pb-8"
+      className="flex-1 flex flex-col items-center pt-2 px-4 md:px-6 overflow-y-auto pb-8 scrollbar-hide"
     >
       {/* CRONOMETRO - HEADER BLOCK COMPACTO E LARGO */}
       <div className="w-full mb-2">
